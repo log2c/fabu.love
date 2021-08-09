@@ -154,7 +154,8 @@ async function parseAppAndInsertToDB(file, user, team) {
         await app.save()
         info.uploader = user.username;
         info.uploaderId = user._id;
-        info.size = fs.statSync(fileRealPath).size
+        // info.size = fs.statSync(fileRealPath).size
+        info.size = file.size;
         var version = Version(info)
         version.md5 = filemd5
         version.appId = app._id;
@@ -170,7 +171,8 @@ async function parseAppAndInsertToDB(file, user, team) {
     if (!version) {
         info.uploader = user.username;
         info.uploaderId = user._id;
-        info.size = fs.statSync(fileRealPath).size
+        // info.size = fs.statSync(fileRealPath).size
+        info.size = file.size;
         var version = Version(info)
         version.appId = app._id;
         version.md5 = filemd5
@@ -236,7 +238,7 @@ function parseIpa(filename) {
             }
             resolve(info)
         })
-        
+
     })
 }
 
@@ -259,7 +261,7 @@ async function extractIpaIcon(filename, guid, team) {
             }
         })
     }).catch({
-        
+
     })
 
     if (!found) {
@@ -382,7 +384,7 @@ function extractApkIcon(filepath, guid, team) {
             var realPath = path.join(team.id, "icon", '/{0}_a.png'.format(guid))
             createFolderIfNeeded(dir)
             var tempOut = path.join(uploadDir, realPath)
-            
+
             var { ext, dir } = path.parse(iconPath);
             // 获取到最大的png的路径
             let maxSizePath;
